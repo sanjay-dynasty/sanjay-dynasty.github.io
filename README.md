@@ -1,21 +1,34 @@
-# Sanjay Kumar — Professional Portfolio
+# Sanjay Kumar — Portfolio Website
 
-Responsive one-page portfolio using plain HTML, CSS and JavaScript. No framework or build step required.
+A responsive portfolio inspired by the supplied reference screenshots and screen recording. Built with plain HTML, CSS and JavaScript.
+
+## Features
+- Warm ivory background, red accent palette and typography close to the reference.
+- Animated particle/network canvas in the hero.
+- Subtle cursor follower, scroll progress indicator and scroll-reveal transitions.
+- Sticky navigation with mobile menu.
+- Experience, tech stack, projects and contact sections.
+- Functional Page Tour button that guides visitors through the page.
+- Responsive layout and reduced-motion accessibility support.
 
 ## Run locally
-Extract the ZIP and open `index.html` in a browser. For live reload, use VS Code Live Server.
+1. Extract this ZIP.
+2. Open the folder in VS Code.
+3. Open `index.html` with the Live Server extension, or open it directly in a browser.
 
-## Customize before publishing
-- Update project summaries and repository links in `index.html`.
-- Add your LinkedIn URL and email in `script.js`.
-- Replace any planned/learning project descriptions with accurate current status.
-- Add a resume download link if desired.
+## Personalize before publishing
+Open `script.js` and fill in:
+- `PROFILE.linkedin`
+- `PROFILE.email`
+- `PROFILE.resume` (optional path to your resume PDF)
 
-## Publish on GitHub Pages
-1. Create a public repository named `sanjay-dynasty.github.io` (assuming `sanjay-dynasty` is your GitHub username).
+Also update project repository URLs and descriptions in `index.html`. The GenAI Knowledge Assistant is presented as a learning/project concept; change it to match the actual implementation status. Replace the `SK` monogram with your own profile image if you want the same portrait treatment as the reference.
+
+## Deploy to GitHub Pages
+1. Create a public repository named `sanjay-dynasty.github.io` (assuming that is your GitHub username).
 2. Upload the contents of this folder to the repository root.
-3. Go to Settings → Pages.
-4. Choose Deploy from a branch → `main` → `/ (root)` → Save.
-5. Your site should publish at `https://sanjay-dynasty.github.io`.
+3. Open **Settings → Pages**.
+4. Under Build and deployment, choose **Deploy from a branch**, branch `main`, folder `/ (root)`, then Save.
+5. GitHub Pages will publish at `https://sanjay-dynasty.github.io`.
 
-Files: `index.html`, `styles.css`, `script.js`.
+Files: `index.html`, `styles.css`, `script.js`, `README.md`.
