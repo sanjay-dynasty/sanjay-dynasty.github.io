@@ -81,28 +81,84 @@ if (window.matchMedia("(pointer:fine)").matches) {
   });
 }
 
-// Page Tour button guides visitors through the main sections.
-const tourSections = [
-  ["#home", "Welcome — this is my engineering portfolio."],
-  ["#about", "A little about my background and engineering approach."],
-  ["#experience", "My professional journey at EPAM Systems and Infosys."],
-  ["#skills", "The technologies I work with and the areas I'm learning."],
-  ["#projects", "Selected projects and experiments."],
-  ["#contact", "Thanks for visiting — let's connect."]
-];
-let tourIndex = 0;
+// Build Tour: visual simulation of several specialist agents inspecting/building page blocks.
 const tourButton = document.getElementById("pageTour");
-const toast = document.getElementById("tourToast");
-tourButton.addEventListener("click", () => {
-  const [selector, message] = tourSections[tourIndex];
-  document.querySelector(selector).scrollIntoView({ behavior: "smooth" });
-  toast.textContent = message;
-  toast.classList.add("show");
-  window.clearTimeout(window.__tourToastTimer);
-  window.__tourToastTimer = window.setTimeout(() => toast.classList.remove("show"), 2400);
-  tourIndex = (tourIndex + 1) % tourSections.length;
-  tourButton.innerHTML = `<span>⊕</span> Page Tour ${tourIndex === 0 ? "↻" : `${tourIndex}/${tourSections.length}`}`;
-});
+const tourToast = document.getElementById("tourToast");
+const agentStatusMessage = document.getElementById("agentStatusMessage");
+const agentStatusCount = document.getElementById("agentStatusCount");
+const tourSteps = [
+  { selector: ".hero-content", label: "HERO / CONTENT AGENT", message: "Composing the introduction and call-to-action", section: "#home" },
+  { selector: ".about-copy", label: "ABOUT / CONTENT AGENT", message: "Structuring profile content and story", section: "#about" },
+  { selector: ".experience-list", label: "EXPERIENCE / DATA AGENT", message: "Arranging career timeline blocks", section: "#experience" },
+  { selector: ".stack-track", label: "SKILLS / UI AGENT", message: "Grouping technologies into skill modules", section: "#skills" },
+  { selector: ".projects-grid", label: "PROJECTS / BUILD AGENT", message: "Composing project cards and metadata", section: "#projects" },
+  { selector: ".contact-actions", label: "CONTACT / INTEGRATION AGENT", message: "Connecting contact actions and profile links", section: "#contact" }
+];
+let tourRunning = false;
+let tourTimers = [];
+let activeHighlights = [];
+
+function clearAgentTour() {
+  tourTimers.forEach(t => clearTimeout(t));
+  tourTimers = [];
+  activeHighlights.forEach(el => {
+    el.classList.remove("agent-highlight", "agent-done");
+    el.removeAttribute("data-agent-label");
+  });
+  activeHighlights = [];
+  document.body.classList.remove("agent-tour-active");
+  tourRunning = false;
+  tourButton.innerHTML = '<span>✣</span> Build Tour';
+  agentStatusMessage.textContent = "Agents ready";
+  agentStatusCount.textContent = "0 / 6";
+}
+
+function runAgentTour() {
+  if (tourRunning) { clearAgentTour(); return; }
+  tourRunning = true;
+  document.body.classList.add("agent-tour-active");
+  tourButton.innerHTML = '<span>×</span> Stop Tour';
+  const allCursors = document.querySelectorAll(".agent-cursor");
+  allCursors.forEach((cursor, i) => {
+    cursor.style.animationPlayState = "running";
+    cursor.style.animationDelay = `${i * .15}s`;
+  });
+
+  tourSteps.forEach((step, index) => {
+    const timer = setTimeout(() => {
+      if (!tourRunning) return;
+      const el = document.querySelector(step.selector);
+      if (!el) return;
+      activeHighlights.forEach(previous => previous.classList.add("agent-done"));
+      el.classList.add("agent-highlight");
+      el.setAttribute("data-agent-label", step.label);
+      activeHighlights.push(el);
+      agentStatusMessage.textContent = step.message;
+      agentStatusCount.textContent = `${index + 1} / ${tourSteps.length}`;
+      tourToast.textContent = step.message;
+      tourToast.classList.add("show");
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, index * 2600 + 350);
+    tourTimers.push(timer);
+  });
+
+  const finishTimer = setTimeout(() => {
+    if (!tourRunning) return;
+    agentStatusMessage.textContent = "Build sequence complete";
+    agentStatusCount.textContent = "6 / 6";
+    tourToast.textContent = "All portfolio sections assembled — tour complete.";
+    tourToast.classList.add("show");
+    const finalTimer = setTimeout(() => {
+      if (!tourRunning) return;
+      clearAgentTour();
+      tourToast.classList.remove("show");
+      document.querySelector("#home").scrollIntoView({ behavior: "smooth" });
+    }, 2300);
+    tourTimers.push(finalTimer);
+  }, tourSteps.length * 2600 + 500);
+  tourTimers.push(finishTimer);
+}
+tourButton.addEventListener("click", runAgentTour);
 
 // Personalize links here before publishing.
 const PROFILE = {

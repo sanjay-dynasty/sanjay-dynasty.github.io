@@ -116,7 +116,24 @@
     </section>
   </main>
 
-  <button class="page-tour" id="pageTour"><span>⊕</span> Page Tour</button>
+  <div class="agent-stage" id="agentStage" aria-hidden="true">
+    <div class="agent-stage-grid"></div>
+    <div class="agent-status" id="agentStatus">
+      <span class="agent-status-pulse"></span>
+      <span class="agent-status-title">PORTFOLIO BUILD SYSTEM</span>
+      <span class="agent-status-message" id="agentStatusMessage">Agents ready</span>
+      <span class="agent-status-count" id="agentStatusCount">0 / 6</span>
+    </div>
+    <div class="agent-cursors" id="agentCursors">
+      <div class="agent-cursor agent-a"><span class="cursor-pointer">↖</span><b>LAYOUT AGENT</b></div>
+      <div class="agent-cursor agent-b"><span class="cursor-pointer">↖</span><b>CONTENT AGENT</b></div>
+      <div class="agent-cursor agent-c"><span class="cursor-pointer">↖</span><b>UI AGENT</b></div>
+      <div class="agent-cursor agent-d"><span class="cursor-pointer">↖</span><b>INTERACTION AGENT</b></div>
+      <div class="agent-cursor agent-e"><span class="cursor-pointer">↖</span><b>QUALITY AGENT</b></div>
+    </div>
+    <div class="agent-scanline"></div>
+  </div>
+  <button class="page-tour" id="pageTour"><span>✣</span> Build Tour</button>
   <div class="tour-toast" id="tourToast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
